@@ -3,9 +3,11 @@ import { Outlet } from "react-router-dom";
 import { Sidebar } from "../components/navigation/Sidebar";
 import { SidebarItem } from "../components/navigation/SidebarItem";
 import { LayoutDashboard, Terminal, Activity, Settings, Radio } from "lucide-react";
+import { useWatchlist } from "@/context/WatchlistContext";
 
 export const DashboardLayout: React.FC = () => {
     // Hardcoded for now—this will connect to your local storage tracking hooks later
+    const { watchedAgents } = useWatchlist();
 
     return (
         <div className="w-screen h-screen flex overflow-hidden bg-slate-900 text-slate-100 antialiased">
@@ -19,7 +21,7 @@ export const DashboardLayout: React.FC = () => {
                     to="/watchlist"
                     label="Agent Runners"
                     icon={<Terminal size={18} />}
-                    badgeCount={3}
+                    badgeCount={watchedAgents.length > 0 ? watchedAgents.length : undefined}
                 />
                 <SidebarItem
                     to="/streams"

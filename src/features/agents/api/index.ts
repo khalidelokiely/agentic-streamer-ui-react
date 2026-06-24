@@ -2,6 +2,8 @@ import type { WatchableAgentRun } from '../../../types'
 
 const BASE = import.meta.env.VITE_API_BASE_URL + '/v1/agents'
 
+console.log('API Base URL:', BASE)
+
 export const getEventSourceUrl = (clientId: string) => `${BASE}/sse?clientId=${clientId}`
 
 export const fetchAgents = (): Promise<Record<string, import('../../../types').AgentMetadata>> =>
