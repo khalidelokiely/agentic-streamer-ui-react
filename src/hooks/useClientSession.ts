@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export function useClientSession() {
-    const [clientId, setClientId] = useState<string>(() => {
+    const [clientId] = useState<string>(() => {
         // 1. Check if an ID already exists for this tab session
         const existingId = window.sessionStorage.getItem("client_id");
         if (existingId) return existingId;
