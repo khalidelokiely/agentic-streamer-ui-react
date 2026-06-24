@@ -5,7 +5,7 @@ import { StatusIcon } from '../../components/StatusIcon'
 import { ActionMenu } from '@/components/ActionMenu'
 import { ActionMenuItem } from '@/components/ActionMenuItem'
 import { useClientSession } from '@/hooks/useClientSession'
-import { unwatchAgentRun } from '../agents/api'
+import { getEventSourceUrl, unwatchAgentRun, watchAgentRun } from '../agents/api'
 import { useWatchlist } from '@/context/WatchlistContext'
 
 const STATUS_STYLES: Record<string, string> = {
@@ -41,7 +41,7 @@ export const WatchlistView = () => {
         let es: EventSource | null = null;
 
         // 1. Open the stream pipe first
-        es = new EventSource(`http://localhost:80/v1/agents/sse?clientId=${clientId}`);
+        es = new EventSource(getEventSourceUrl(clientId));
 
         // 2. Leverage the live callback engine
         es.onopen = async () => {
@@ -55,14 +55,7 @@ export const WatchlistView = () => {
 
                 // Only issue network traffic if the client actually has targets to track
                 if (savedAgents.length > 0) {
-                    const response = await fetch("http://localhost:80/v1/agents/watch", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            client_id: clientId,
-                            agents: savedAgents
-                        })
-                    });
+                    const response = await watchAgentRun(clientId, savedAgents);
 
                     if (!response.ok) {
                         throw new Error(`Server responded with status ${response.status}`);
