@@ -1,4 +1,4 @@
-const BASE = 'http://localhost:80/v1/agents'
+const BASE = import.meta.env.VITE_API_BASE_URL + '/v1/agents'
 
 export const fetchAgents = (): Promise<Record<string, import('../../../types').AgentMetadata>> =>
     fetch(BASE).then(r => r.json())
