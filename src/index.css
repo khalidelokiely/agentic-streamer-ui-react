@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-canvas: #020625;
+  --color-text-primary: #f3f4f6;
+  --color-text-secondary: #9ca3af;
+  --color-status-thinking: #ffc43b;
+  --color-status-executing: #848cfc;
+  --color-status-completed: #34d399;
+  --ease-damped-settle: cubic-bezier(0.25, 1, 0.5, 1);
+  --duration-snappy: 200ms;
+  --animate-fade-in-up: fade-in-up var(--duration-snappy) var(--ease-damped-settle) both;
+}
+
+body {
+  background-color: var(--color-bg-canvas);
+  color: var(--color-text-primary);
+}
+
+/* The container that spins around the icon */
+.loader-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(0,0,0,0);       /* Light gray track background */
+  border-top: 1px solid;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Keyframe to handle the rotation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Counter-spin to keep the internal icon upright */
+.loader-icon {
+  animation: spin-reverse 1s linear infinite;
+}
+
+@keyframes spin-reverse {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
